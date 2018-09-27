@@ -1,31 +1,37 @@
+// Include Library
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 #include <LiquidCrystal_I2C.h>
 #include <Wire.h>
 #include <stdio.h>
 #include <stdlib.h>
-const char* ssid = "($this)iPhone";
-const char* password = "12345678";
-const char* mqtt_server = "broker.mqttdashboard.com";
+// Wi-Fi Setup
+const char *ssid = "($this)iPhone";
+const char *password = "12345678";
+// MQTT Setup
+const char *mqtt_server = "broker.mqttdashboard.com";
 long lastMsg = 0;
 int i;
 String msg;
 int room = 112;
-char outTopic[]   = "myTopic";
-char inTopic[]   = "input-Node-MCU";
+char outTopic[] = "myTopic";
+char inTopic[] = "input-Node-MCU";
 char buffer_str[1000];
 int number = 1;
+
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 WiFiClient espClient;
 PubSubClient client(espClient);
-void setup_wifi() {
+void setup_wifi()
+{
   delay(10);
   // We start by connecting to a WiFi network
   Serial.println();
   Serial.print("Connecting to ");
   Serial.println(ssid);
   WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
+  while (WiFi.status() != WL_CONNECTED)
+  {
     delay(500);
     Serial.print(".");
   }
@@ -35,18 +41,23 @@ void setup_wifi() {
   Serial.println(WiFi.localIP());
 }
 
-void reconnect() {
+void reconnect()
+{
   // Loop until we're reconnected
-  while (!client.connected()) {
+  while (!client.connected())
+  {
     Serial.print("Attempting MQTT connection...");
     char clientID[15];
     String("iot-" + String(random(1000000))).toCharArray(clientID, 15);
     //Random Client ID
-    if (client.connect(clientID)) {
+    if (client.connect(clientID))
+    {
       Serial.println("Successfully connected with MQTT");
       Serial.print("Client: ");
       Serial.println(clientID);
-    } else {
+    }
+    else
+    {
       Serial.print("failed, rc=");
       Serial.print(client.state());
       Serial.println(" try again in 5 seconds"); // Wait 5 seconds before retrying delay(1000);
@@ -54,10 +65,12 @@ void reconnect() {
   }
 }
 
-void callback(char* topic, byte* payload, unsigned int length) {
+void callback(char *topic, byte *payload, unsigned int length)
+{
   String payload_str = "";
   String topic_str = String(topic);
-  for (int i = 0; i < length; i++) {
+  for (int i = 0; i < length; i++)
+  {
     payload_str += (char)payload[i];
   }
   Serial.print("Message arrived [");
@@ -69,7 +82,8 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.println(i + 2);
 }
 
-void setup() {
+void setup()
+{
   // put your setup code here, to run once:
   Serial.begin(115200);
   setup_wifi();
@@ -86,12 +100,15 @@ void setup() {
   lcd.setCursor(0, 0);
 }
 
-void loop() {
+void loop()
+{
   // put your main code here, to run repeatedly:
-  if (!client.connected()) {
+  if (!client.connected())
+  {
     reconnect();
   }
-  while (true) {
+  while (true)
+  {
     lcd.setCursor(10, 0);
     lcd.print(number);
     lcd.setCursor(7, 1);
