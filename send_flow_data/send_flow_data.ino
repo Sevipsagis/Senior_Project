@@ -18,12 +18,13 @@ const char *mqtt_server = "broker.mqttdashboard.com";
 WiFiClient espClient;
 PubSubClient client(espClient);
 char outTopic[] = "myTopic";
-int number = 0;
+int number = 1;
 int room = 112;
 //  Water Flow Sensor
 volatile int NbTopsFan; //measuring the rising edges of the signal
-double Calc;
-double Total;
+float Calc;
+float Total;
+int intTotal;
 int hallsensor = 14;   //The pin location of the sensor
 //  otherwise
 int delayTime = 1;
@@ -115,18 +116,21 @@ void loop() {
   cli();           //Disable interrupts
   Calc = (NbTopsFan * 60 / 7.5) / 3600; //(Pulse frequency x 60) / 7.5Q, = flow rate in L/hour
   Total += Calc;
+  intTotal = Total;
   Serial.print ("Total: "); //Prints the number calculated above
-  Serial.println (Total); //Prints the number calculated above
+  Serial.println (Total, 4); //Prints the number calculated above
   Serial.print ("Calc: "); //Prints the number calculated above
-  Serial.println (Calc); //Prints the number calculated above
+  Serial.println (Calc, 4); //Prints the number calculated above
   lcd.setCursor(10, 0);
   lcd.print(number);
   lcd.setCursor(7, 1);
-  lcd.print(Total);
+  lcd.print(Total, 4);
   if(delayTime == 5){
     char outPayload[1000] = "";
-    sprintf(outPayload, "{\"room\": \"%i\", \"elec_usage\": %i, \"water_usage\" : %i}", room, number, number);
+    sprintf(outPayload, "{\"room\": \"%i\", \"elec_usage\": %i, \"water_usage\" : %d.%04d}", room, number, (int)Total, (int)(Total*10000)%10000);
+    Serial.print(outPayload);
     client.publish(outTopic, outPayload);
+    delayTime = 0;
   }
   delayTime++;
   client.loop();
