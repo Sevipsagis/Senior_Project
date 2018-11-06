@@ -26,10 +26,14 @@ object = JSON.parse(message);
 // roomNumber = object.room;
 // context = object.message;
 // console.log(context);
-var document = new messageModel(object);
-document.save((err, data) => {
-  if(err){console.log(err)}
-  else{console.log("save complete");console.log(data)}
+// var document = new messageModel(object);
+// document.save((err, data) => {
+//   if(err){console.log(err)}
+//   else{console.log("save complete");console.log(data)}
+// });
+messageModel.findOneAndUpdate({room : object.room}, object, (err, data) => {
+  if(err) console.log(err);
+  console.log("Update : ", data);
 });
 })
 // view engine setup

@@ -9,5 +9,5 @@ var messageSchema = mongoose.Schema({
     versionKey: false 
 });
 
-var Message = mongoose.model('data_from_mqtt', messageSchema);
+var Message = mongoose.model('users_data', messageSchema);
 module.exports = Message;
