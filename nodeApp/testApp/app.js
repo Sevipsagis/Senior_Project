@@ -3,12 +3,13 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var keys = require("./config/keys");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var mongoose = require("mongoose");
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect(keys.mongoURI);
 mongoose.Promise = global.Promise;
 
 var mqtt = require('mqtt')
