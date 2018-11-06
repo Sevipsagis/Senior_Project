@@ -13,7 +13,7 @@ mongoose.connect(keys.mongoURI);
 mongoose.Promise = global.Promise;
 
 var mqtt = require('mqtt')
-var messageModel = require('./models/message');
+var messageModel = require('./models/messageModel');
 var client  = mqtt.connect('mqtt://broker.mqttdashboard.com')
 
 var app = express();
@@ -32,7 +32,7 @@ object = JSON.parse(message);
 //   if(err){console.log(err)}
 //   else{console.log("save complete");console.log(data)}
 // });
-messageModel.findOneAndUpdate({room : object.room}, object, (err, data) => {
+messageModel.findOneAndUpdate({"room" : object.room}, object, (err, data) => {
   if(err) console.log(err);
   console.log("Update : ", data);
 });
