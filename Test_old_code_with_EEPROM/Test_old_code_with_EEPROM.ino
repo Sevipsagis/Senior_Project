@@ -26,7 +26,9 @@ const char *mqtt_server = "broker.mqttdashboard.com";
 WiFiClient espClient;
 PubSubClient client(espClient);
 char outTopic[] = "myTopic";
+// Elect Sensor
 int number = 0;
+int elec_Total = 0;
 //  Water Flow Sensor
 volatile int NbTopsFan; //measuring the rising edges of the signal
 float Calc;
@@ -45,26 +47,13 @@ int saveRoomID = 0;
 String roomID = "";
 // EEPROM data
 int eeAddress = 0;
-struct backup_data {
-  String b_roomID;
-  int b_electunit;
-  float b_waterunit;
-} backup_data;
+struct backupData {
+  char b_roomID[3];
+  int b_elec;
+  float b_water;
+} backupData;
 //  otherwise
 int delayTime = 1;
-//----------------------------------------------------
-
-// Custom Character LCD
-byte nowCols[8] = {
-  B11111,
-  B11111,
-  B11111,
-  B11111,
-  B11111,
-  B11111,
-  B11111,
-  B11111
-};
 //----------------------------------------------------
 
 //Function
@@ -141,22 +130,20 @@ void setup() {
   lcd.home();
   // IR Receiver
   irrecv.enableIRIn();
-  // create a new custom character
-  lcd.createChar(0, nowCols);
   // EEPROM (512 bytes)
   EEPROM.begin(512);
-  EEPROM.get(eeAddress, backup_data);
-  roomID = backup_data.b_roomID;
-  number = backup_data.b_electunit;
-  Total = backup_data.b_waterunit;
+  EEPROM.get(eeAddress, backupData);
+  roomID = backupData.b_roomID;
+  number = backupData.b_elec;
+  Total = backupData.b_water;
   Serial.println("Load Back up from EEPROM");
   Serial.print("This Room ID : ");
-  Serial.println(backup_data.b_roomID);
+  Serial.println(backupData.b_roomID);
   Serial.print("This Room Elect Units : ");
-  Serial.println(backup_data.b_electunit);
+  Serial.println(backupData.b_elec);
   Serial.print("This Room Water Units : ");
-  Serial.println(backup_data.b_waterunit);
-  EEPROM.put(eeAddress, backup_data);
+  Serial.println(backupData.b_water);
+  Serial.println ("----------------------------------------------------");
 }
 
 void waterCount() {
@@ -167,6 +154,11 @@ void waterCount() {
   Calc = (NbTopsFan * 60 / 7.5) / 3600; //(Pulse frequency x 60) / 7.5Q, = flow rate in L/hour
   Total += Calc;
   intTotal = Total;
+}
+
+void elecCount() {
+  number += 1;
+  elec_Total += number;
 }
 
 void enterPass() {
@@ -259,10 +251,6 @@ void setRoomID() {
   lcd.setCursor(0, 1);
   lcd.print("***");
   while (saveRoomID != 1) {
-    Serial.print("Now Room ID : ");
-    Serial.println(roomID);
-    Serial.print("Now numCols : ");
-    Serial.println(numCols);
     lcd.setCursor(numCols, 1);
     while (irrecv.decode(&results)) {
       // print() & println() can't handle printing long longs. (uint64_t)
@@ -273,15 +261,8 @@ void setRoomID() {
       } else {
         if (results.value == 0xFFFFFFFF) {
           results.value = key_value;
-          //          if (numCols > 2) {
-          //            numCols = 2;
-          //          }
         }
         switch (results.value) {
-          //        case 0xFFE01F:
-          //          numCols -= 1;
-          //          roomID.remove(numCols, numCols);
-          //          break ;
           case 0xFFA857:
             saveRoomID = 1;
             break ;
@@ -294,9 +275,6 @@ void setRoomID() {
               numCols = 0;
             }
             break ;
-          //        case 0xFF906F:
-          //          numCols += 1;
-          //          break ;
           case 0xFF6897:
             roomID += "0";
             lcd.print("0");
@@ -348,20 +326,24 @@ void setRoomID() {
             numCols += 1;
             break ;
         }
+        Serial.print("Now Room ID : ");
+        Serial.println(roomID);
+        Serial.print("Now numCols : ");
+        Serial.println(numCols);
       }
       key_value = results.value;
       irrecv.resume();
     }
     delay(100);
   }
-  backup_data.b_roomID = roomID;
+  strcpy(backupData.b_roomID, roomID.c_str());
   Serial.print("This Room ID : ");
-  Serial.println(backup_data.b_roomID);
+  Serial.println(backupData.b_roomID);
+  Serial.println ("----------------------------------------------------");
 }
 
 void irRemote() {
   while (irrecv.decode(&results)) {
-    Serial.println("IR Start");
     // print() & println() can't handle printing long longs. (uint64_t)
     if (results.value == 0xFFFFFFFFFFFFFFFF) {
       results.value = key_value;
@@ -378,6 +360,7 @@ void irRemote() {
       case 0xFF22DD:
         Serial.print("This room ID is : ");
         Serial.println(roomID);
+        Serial.println ("----------------------------------------------------");
         break;
       case 0xFFA25D:
         clearEEPROM();
@@ -392,15 +375,31 @@ void irRemote() {
 void clearEEPROM() {
   for (int i = 0 ; i < 512 ; i++) {
     EEPROM.write(i, 0);
-//    EEPROM.end();
+    EEPROM.commit();
   }
+  Serial.println("Cleared!!!");
+  Serial.println ("----------------------------------------------------");
   roomID = "";
   number = 0;
+  elec_Total = 0;
   Total = 0;
+  strcpy(backupData.b_roomID, roomID.c_str());
+  backupData.b_elec = number;
+  backupData.b_water = Total;
+  EEPROM.put(0, backupData);
+  EEPROM.commit();
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
+  lcd.print("Electric: 0");
+  lcd.setCursor(0, 1);
+  lcd.print("Water: 0");
+  lcd.setCursor(10, 0);
+  lcd.print(number);
+  lcd.setCursor(7, 1);
+  lcd.print(Total, 4);
+  lcd.setCursor(0, 0);
   if (!client.connected())
   {
     reconnect();
@@ -412,33 +411,33 @@ void loop() {
     irRemote();
   }
   waterCount();
-  Serial.print ("Total: "); //Prints the number calculated above
-  Serial.println (Total, 4); //Prints the number calculated above
-  Serial.print ("Calc: "); //Prints the number calculated above
+  elecCount();
+  Serial.println ("----------------------------------------------------");
+  Serial.print ("Calc Elect Units : "); //Prints the number calculated above
+  Serial.println (number); //Prints the number calculated above
+  Serial.print ("Total Elect Units : "); //Prints the number calculated above
+  Serial.println (elec_Total); //Prints the number calculated above
+  Serial.print ("Calc Water Units : "); //Prints the number calculated above
   Serial.println (Calc, 4); //Prints the number calculated above
-  lcd.print("Electric: 0");
-  lcd.setCursor(0, 1);
-  lcd.print("Water: 0");
-  lcd.setCursor(10, 0);
-  lcd.print(number);
-  lcd.setCursor(7, 1);
-  lcd.print(Total, 4);
-  lcd.setCursor(0, 0);
+  Serial.print ("Total Water Units : "); //Prints the number calculated above
+  Serial.println (Total, 4); //Prints the number calculated above
   Serial.println(delayTime);
+  backupData.b_elec = number;
+  backupData.b_water = Total;
+  EEPROM.put(0, backupData);
+  EEPROM.commit();
   if (delayTime == 5) {
     if (roomID != "") {
-      backup_data.b_electunit = number;
-      backup_data.b_waterunit = Total;
+      Serial.println ("----------------------------------------------------");
       Serial.print("This Room ID : ");
-      Serial.println(backup_data.b_roomID);
+      Serial.println(backupData.b_roomID);
       Serial.print("This Room Elect Units : ");
-      Serial.println(backup_data.b_electunit);
+      Serial.println(backupData.b_elec);
       Serial.print("This Room Water Units : ");
-      Serial.println(backup_data.b_waterunit);
-      EEPROM.put(eeAddress, backup_data);
-      EEPROM.commit();
+      Serial.println(backupData.b_water);
       char outPayload[1000] = "";
       sprintf(outPayload, "{\"room\": \"%i\", \"elec_usage\": %i, \"water_usage\" : %d.%04d}", roomID.toInt(), number, (int)Total, (int)(Total * 10000) % 10000);
+      Serial.print("Data was put to database : ");
       Serial.println(outPayload);
       client.publish(outTopic, outPayload);
     }
@@ -446,5 +445,5 @@ void loop() {
   }
   delayTime++;
   client.loop();
-  number++;
+  Serial.println ("----------------------------------------------------");
 }
