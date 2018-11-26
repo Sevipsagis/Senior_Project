@@ -267,9 +267,10 @@ void setRoomID() {
             saveRoomID = 1;
             break ;
           case 0xFFB04F:
-            lcd.print("*");
             roomID.remove(numCols);
             numCols -= 1;
+            lcd.print("*");
+            lcd.setCursor(numCols,1);
             if (numCols < 0) {
               roomID = "";
               numCols = 0;
