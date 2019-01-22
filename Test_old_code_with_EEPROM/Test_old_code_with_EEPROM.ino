@@ -121,7 +121,7 @@ void setup() {
   //MQTT
   client.setServer(mqtt_server, 1883);
   //LCD
-  Wire.begin(D2, D1);
+  Wire.begin(D2, D1); //d2 = sda , d1 = scl
   lcd.begin();
   lcd.print("Electric: 0");
   lcd.setCursor(0, 1);
