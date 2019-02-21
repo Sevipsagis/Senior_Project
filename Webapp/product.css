@@ -1,0 +1,161 @@
+body{
+  height: 100vh;
+  overflow: hidden;
+}
+
+.scroll{
+  overflow: auto !important;
+  overflow-x: hidden !important;
+}
+
+.container {
+  max-width: 960px;
+}
+
+.not-empty{
+  color: #00BFFF;
+  font-weight: bold;
+}
+
+.empty{
+  color: #FF6347;
+  font-weight: bold;
+}
+
+.btn-self{
+  background-color: white;
+  border: 5px solid white;
+}
+
+.btn-light:not(:disabled):not(.disabled).active, .btn-light:not(:disabled):not(.disabled):active, .show>.btn-light.dropdown-toggle {
+  color: #212529;
+  background-color: #dae0e5;
+  border-color: white !important;
+}
+
+.blank-text:after{
+  content: '.';
+  visibility: hidden;
+}
+
+/*
+ * Custom translucent site header
+ */
+
+/* .site-header {
+  background-color: rgba(0, 0, 0, .85);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  }*/
+/*.site-header a {
+  color: #999;
+  transition: ease-in-out color .15s;
+}
+.site-header a:hover {
+  color: #fff;
+  text-decoration: none;
+  }*/
+
+/*
+ * Dummy devices (replace them with your own or something else entirely!)
+ */
+
+ .product-device {
+  position: absolute;
+  right: 10%;
+  bottom: -30%;
+  width: 300px;
+  height: 540px;
+  background-color: #333;
+  border-radius: 21px;
+  -webkit-transform: rotate(30deg);
+  transform: rotate(30deg);
+}
+
+.product-device::before {
+  position: absolute;
+  top: 10%;
+  right: 10px;
+  bottom: 10%;
+  left: 10px;
+  content: "";
+  background-color: rgba(255, 255, 255, .1);
+  border-radius: 5px;
+}
+
+.product-device-2 {
+  top: -25%;
+  right: auto;
+  bottom: 0;
+  left: 5%;
+  background-color: #e5e5e5;
+}
+
+
+/*
+ * Extra utilities
+ */
+
+ .flex-equal > * {
+  -ms-flex: 1;
+  flex: 1;
+}
+@media (min-width: 768px) {
+  .flex-md-equal > * {
+    -ms-flex: 1;
+    flex: 1;
+  }
+}
+
+.overflow-hidden { overflow: hidden; }
+
+.nav-active {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  content: " ";
+  border-bottom: 5px solid #5BC0EB;
+}
+
+.elec-num{
+  color: #00BFFF;
+}
+
+.water-num{
+  color: #FF6347;
+}
+
+.room-num{
+  color: #7FFFD4;
+}
+
+.custom-dropdown{
+  height: 80px;
+  overflow: auto;
+}
+
+@media (min-width: 0) {
+  .card-deck .card {
+    flex: 0 0 calc(100% - 30px);
+  }
+}
+@media (min-width: 576px) {
+  .card-deck .card {
+    flex: 0 0 calc(50% - 30px);
+  }
+}
+@media (min-width: 768px) {
+  .card-deck .card {
+    flex: 0 0 calc(33.3333333333% - 30px);
+  }
+}
+@media (min-width: 992px) {
+  .card-deck .card {
+    flex: 0 0 calc(25% - 30px);
+  }
+}
+@media (min-width: 1200px) {
+  .card-deck .card {
+    flex: 0 0 calc(20% - 30px);
+  }
+}

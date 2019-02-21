@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+	<!-- Custom styles for this template -->
+	<link href="product.css" rel="stylesheet">
+
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+		google.charts.load('current', {'packages':['line']});
+		google.charts.setOnLoadCallback(drawChart);
+
+		function drawChart() {
+
+			var data = new google.visualization.DataTable();
+			data.addColumn('number', 'Day');
+			data.addColumn('number', 'Elec');
+			data.addColumn('number', 'Water');
+
+			data.addRows([
+				[1,  37.8, 80.8],
+				[2,  30.9, 69.5],
+				[3,  25.4,   57],
+				[4,  11.7, 18.8],
+				[5,  11.9, 17.6],
+				[6,   8.8, 13.6],
+				[7,   7.6, 12.3],
+				[8,  12.3, 29.2],
+				[9,  16.9, 42.9],
+				[10, 12.8, 30.9],
+				[11,  5.3,  7.9],
+				[12,  6.6,  8.4],
+				[13,  4.8,  6.3],
+				[14,  4.2,  6.2],
+				[15,  37.8, 80.8],
+				[16,  30.9, 69.5],
+				[17,  25.4,   57],
+				[18,  11.7, 18.8],
+				[19,  11.9, 17.6],
+				[20,   8.8, 13.6],
+				[21,  37.8, 80.8],
+				[22,  30.9, 69.5],
+				[23,  25.4,   57],
+				[24,  11.7, 18.8],
+				[25,  11.9, 17.6],
+				[26,   8.8, 13.6],
+				[27,   7.6, 12.3],
+				[28,  12.3, 29.2],
+				[29,  16.9, 42.9],
+				[30, 12.8, 30.9]
+				]);
+
+			var options = {
+				width: document.getElementById("result").clientWidth,
+				height: 150,
+				vAxes: {
+					0: {title: 'Units'}},
+				};
+
+				var elms = document.querySelectorAll('#line_top_x');
+				for(var i=0; i < elms.length; i++){
+					var chart = new google.charts.Line(document.querySelectorAll('#line_top_x')[i]);
+
+					chart.draw(data, google.charts.Line.convertOptions(options));
+				}
+			}
+		</script>
+	</head>
+	<body class="bg-light scroll">
+		<nav class="site-header sticky-top navbar navbar-expand-lg navbar-white bg-white">
+			<div class="collapse navbar-collapse">
+				<span class="navbar-brand d-flex" href="#">
+					<img src="hexagon.svg" class="ml-5 mx-auto align-self-center" width="36" height="36"/>
+					<h5 class="ml-3 mb-0 align-self-center">Project 101</h5>
+				</span>
+				<ul class="navbar-nav mx-auto mt-2 mt-lg-0">
+					<li class="nav-item mr-5">
+						<a class="nav-link" href="home.html">
+							<img src="home.svg" class="mx-auto d-block" width="24" height="24"/>
+							Home
+						</a>
+					</li>
+					<li class="nav-item nav-active mr-5">
+						<a class="nav-link" href="Profile.html">
+							<img src="user.svg" class="mx-auto d-block" width="24" height="24"/>
+							Profile
+						</a>
+					</li>
+					<li class="nav-item mr-5">
+						<a class="nav-link" href="register.html">
+							<img src="edit.svg" class="mx-auto d-block" width="24" height="24"/>
+							Register
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<img src="settings.svg" class="mx-auto d-block" width="24" height="24"/>
+							Setting
+						</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		<div class="position-relative overflow-hidden 3 bg-light row pb-5 d-flex">
+			<div class="offset-1 col-8">
+				<h1 class="m-5">Customer Profile</h1>
+			</div>
+			<div class="btn-group btn-group-toggle col-3 align-self-center" data-toggle="buttons">
+				<label class="btn btn-light btn-self active">
+					<input type="radio" name="options" id="option1" autocomplete="off" checked> 1F.
+				</label>
+				<label class="btn btn-light btn-self">
+					<input type="radio" name="options" id="option2" autocomplete="off"> 2F.
+				</label>
+				<label class="btn btn-light btn-self">
+					<input type="radio" name="options" id="option3" autocomplete="off"> 3F.
+				</label>
+			</div>
+			<div class="offset-1 col-10">
+				<div class="offset-1 card-deck">
+					<div class="col-sm-4 col-md-4 col-lg-4">
+						<div class="card mb-4 p-3">
+							<div class="card-body">
+								<ul class="list-inline card-title d-flex">
+									<img src="test.jpg" class="list-inline-item align-self-center rounded-circle" width="72" height="72"/>
+									<div class="list-inline-item">
+										<h5>Room 101</h5>
+										<p class="p-0 m-0 not-empty">Cayla Brister</p>
+										<p class="p-0 m-0">from 20/10/2017</p>
+									</div>
+								</ul>
+								<div class="row pt-3" id="result">
+									<div class="col-6 text-center">
+										<h5>Elec Usage</h5>
+										<ul class="list-inline card-text">
+											<h4 class="list-inline-item elec-num">13</h4>
+											<h5 class="list-inline-item text-muted">Units</h5>
+										</ul>
+									</div>
+									<div class="col-6 text-center">
+										<h5>Water Usage</h5>
+										<ul class="list-inline card-text">
+											<h4 class="list-inline-item water-num">11</h4>
+											<h5 class="list-inline-item text-muted">Units</h5>
+										</ul>
+									</div>
+									<div class="mx-auto pt-3" id="line_top_x"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-4 col-md-4 col-lg-4">
+						<div class="card mb-4 p-3">
+							<div class="card-body">
+								<ul class="list-inline card-title d-flex">
+									<img src="usericon.svg" class="list-inline-item align-self-center rounded-circle" width="72" height="72"/>
+									<div class="list-inline-item">
+										<h5>Room 102</h5>
+										<p class="p-0 m-0 not-empty">Cayla Brister</p>
+										<p class="p-0 m-0">from 20/10/2017</p>
+									</div>
+								</ul>
+								<div class="row pt-3" id="result">
+									<div class="col-6 text-center">
+										<h5>Elec Usage</h5>
+										<ul class="list-inline card-text">
+											<h4 class="list-inline-item elec-num">13</h4>
+											<h5 class="list-inline-item text-muted">Units</h5>
+										</ul>
+									</div>
+									<div class="col-6 text-center">
+										<h5>Water Usage</h5>
+										<ul class="list-inline card-text">
+											<h4 class="list-inline-item water-num">11</h4>
+											<h5 class="list-inline-item text-muted">Units</h5>
+										</ul>
+									</div>
+									<div class="mx-auto pt-3" id="line_top_x"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-4 col-md-4 col-lg-4">
+						<div class="card mb-4 p-3">
+							<div class="card-body">
+								<ul class="list-inline card-title d-flex">
+									<img src="usericon.svg" class="list-inline-item align-self-center rounded-circle" width="72" height="72"/>
+									<div class="list-inline-item">
+										<h5>Room 103</h5>
+										<p class="p-0 m-0 empty">Empty</p>
+										<!-- <p class="p-0 m-0">from 20/10/2017</p> -->
+									</div>
+								</ul>
+								<div class="row pt-3" id="result">
+									<div class="col-6 text-center">
+										<h5>Elec Usage</h5>
+										<ul class="list-inline card-text">
+											<h4 class="list-inline-item elec-num">00</h4>
+											<h5 class="list-inline-item text-muted">Units</h5>
+										</ul>
+									</div>
+									<div class="col-6 text-center">
+										<h5>Water Usage</h5>
+										<ul class="list-inline card-text">
+											<h4 class="list-inline-item water-num">00</h4>
+											<h5 class="list-inline-item text-muted">Units</h5>
+										</ul>
+									</div>
+									<div class="mx-auto pt-3" id="line_top_x"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-4 col-md-4 col-lg-4">
+						<div class="card mb-4 p-3">
+							<div class="card-body">
+								<ul class="list-inline card-title d-flex">
+									<img src="usericon.svg" class="list-inline-item align-self-center rounded-circle" width="72" height="72"/>
+									<div class="list-inline-item">
+										<h5>Room 104</h5>
+										<p class="p-0 m-0 not-empty">Cayla Brister</p>
+										<p class="p-0 m-0">from 20/10/2017</p>
+									</div>
+								</ul>
+								<div class="row pt-3" id="result">
+									<div class="col-6 text-center">
+										<h5>Elec Usage</h5>
+										<ul class="list-inline card-text">
+											<h4 class="list-inline-item elec-num">13</h4>
+											<h5 class="list-inline-item text-muted">Units</h5>
+										</ul>
+									</div>
+									<div class="col-6 text-center">
+										<h5>Water Usage</h5>
+										<ul class="list-inline card-text">
+											<h4 class="list-inline-item water-num">11</h4>
+											<h5 class="list-inline-item text-muted">Units</h5>
+										</ul>
+									</div>
+									<div class="mx-auto pt-3" id="line_top_x"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-4 col-md-4 col-lg-4">
+						<div class="card mb-4 p-3">
+							<div class="card-body">
+								<ul class="list-inline card-title d-flex">
+									<img src="usericon.svg" class="list-inline-item align-self-center rounded-circle" width="72" height="72"/>
+									<div class="list-inline-item">
+										<h5>Room 105</h5>
+										<p class="p-0 m-0 not-empty">Cayla Brister</p>
+										<p class="p-0 m-0">from 20/10/2017</p>
+									</div>
+								</ul>
+								<div class="row pt-3" id="result">
+									<div class="col-6 text-center">
+										<h5>Elec Usage</h5>
+										<ul class="list-inline card-text">
+											<h4 class="list-inline-item elec-num">13</h4>
+											<h5 class="list-inline-item text-muted">Units</h5>
+										</ul>
+									</div>
+									<div class="col-6 text-center">
+										<h5>Water Usage</h5>
+										<ul class="list-inline card-text">
+											<h4 class="list-inline-item water-num">11</h4>
+											<h5 class="list-inline-item text-muted">Units</h5>
+										</ul>
+									</div>
+									<div class="mx-auto pt-3" id="line_top_x"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-4 col-md-4 col-lg-4">
+						<div class="card mb-4 p-3">
+							<div class="card-body">
+								<ul class="list-inline card-title d-flex">
+									<img src="usericon.svg" class="list-inline-item align-self-center rounded-circle" width="72" height="72"/>
+									<div class="list-inline-item">
+										<h5>Room 106</h5>
+										<p class="p-0 m-0 not-empty">Cayla Brister</p>
+										<p class="p-0 m-0">from 20/10/2017</p>
+									</div>
+								</ul>
+								<div class="row pt-3" id="result">
+									<div class="col-6 text-center">
+										<h5>Elec Usage</h5>
+										<ul class="list-inline card-text">
+											<h4 class="list-inline-item elec-num">13</h4>
+											<h5 class="list-inline-item text-muted">Units</h5>
+										</ul>
+									</div>
+									<div class="col-6 text-center">
+										<h5>Water Usage</h5>
+										<ul class="list-inline card-text">
+											<h4 class="list-inline-item water-num">11</h4>
+											<h5 class="list-inline-item text-muted">Units</h5>
+										</ul>
+									</div>
+									<div class="mx-auto pt-3" id="line_top_x"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<!-- jQuery library -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+	<!-- Popper -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+	<!-- Latest compiled and minified Bootstrap JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+	<!-- Initialize Bootstrap functionality -->
+	<script>
+// Initialize tooltip component
+$(function () {
+	$('[data-toggle="tooltip"]').tooltip()
+})
+
+// Initialize popover component
+$(function () {
+	$('[data-toggle="popover"]').popover()
+})
+</script>
+</html>
