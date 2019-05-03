@@ -23,7 +23,7 @@ const char *password = "Kornasak39";
 const char *mqtt_server = "broker.mqttdashboard.com";
 WiFiClient espClient;
 PubSubClient client(espClient);
-char outTopic[] = "myTopic";
+char usedTopic[] = "myTopic";
 // PZEM004T Sensor
 PZEM004T pzem(12, 13); // (RX,TX) connect to D6,D7 of PZEM
 IPAddress ip(192, 168, 1, 1);
@@ -55,7 +55,7 @@ struct backupData {
 } backupData;
 //  otherwise
 int delayTime = 1;
-int relayPort = 15; // Relay is connected to pin D8
+int relayPort = 0; // Relay is connected to pin RX
 //----------------------------------------------------
 //Function
 //  Connect to Wi-Fi
@@ -88,7 +88,7 @@ void reconnect() {
       Serial.println("Successfully connected with MQTT");
       Serial.print("Client: ");
       Serial.println(clientID);
-      client.subscribe("myTopic");
+      client.subscribe(usedTopic);
     }
     else {
       Serial.print("failed, rc=");
@@ -110,13 +110,14 @@ void callback(char* topic, byte* payload, unsigned int length) {
   if (text == "ON") {
     Serial.println("ON");
     digitalWrite (relayPort, HIGH);
-    digitalWrite(BUILTIN_LED, LOW);   // Turn the LED on (Note that LOW is the voltage level
     // but actually the LED is on; this is because
     // it is active low on the ESP-01)
   } else if (text == "OFF") {
     Serial.println("OFF");
     digitalWrite (relayPort, LOW);
-    digitalWrite(BUILTIN_LED, HIGH);  // Turn the LED off by making the voltage HIGH
+  } else if (text == "CLEAREEPROM") {
+    Serial.println("CLEAREEPROM");
+    clearEEPROM();
   }
 
 }
@@ -137,6 +138,7 @@ void setup() {
   setup_wifi();
   //MQTT
   client.setServer(mqtt_server, 1883);
+  client.setCallback(callback);
   //LCD
   Wire.begin(D2, D1); //d2 = sda , d1 = scl
   lcd.begin();
@@ -154,8 +156,8 @@ void setup() {
   EEPROM.begin(512);
   EEPROM.get(eeAddress, backupData);
   roomID = backupData.b_roomID;
-  number = backupData.b_elec;
-  Total = backupData.b_water;
+  elec_Total = backupData.b_elec;
+  water_Total = backupData.b_water;
   Serial.println("Load Back up from EEPROM");
   Serial.print("This Room ID : ");
   Serial.println(backupData.b_roomID);
@@ -402,12 +404,11 @@ void clearEEPROM() {
   Serial.println("Cleared!!!");
   Serial.println ("----------------------------------------------------");
   roomID = "";
-  number = 0;
   elec_Total = 0;
-  Total = 0;
+  water_Total = 0;
   strcpy(backupData.b_roomID, roomID.c_str());
-  backupData.b_elec = number;
-  backupData.b_water = Total;
+  backupData.b_elec = elec_Total;
+  backupData.b_water = water_Total;
   EEPROM.put(0, backupData);
   EEPROM.commit();
 }
@@ -432,7 +433,8 @@ void loop() {
     reconnect();
   }
   if (roomID == "") {
-    setRoomID();
+    //    setRoomID();
+    roomID = "101";
     lcd.clear();
   } else {
     irRemote();
@@ -463,10 +465,10 @@ void loop() {
       Serial.print("This Room Water Units : ");
       Serial.println(backupData.b_water);
       char outPayload[1000] = "";
-      sprintf(outPayload, "{\"room\": \"%i\", \"elec_units\": %d.%04d, \"water_units\" : %d.%04d,  \"elec_usage\": %d.%04d, \"water_usage\" : %d.%04d}", roomID.toInt(), (int)elec_Total, (int)(elec_Total * 10000) % 10000), (int)water_Total, (int)(water_Total * 10000) % 10000), (int)current_elec, (int)(current_elec * 10000) % 10000), (int)current_water, (int)(current_elec * 10000);
+      sprintf(outPayload, "{\"room\": \"%i\", \"elec_units\": %d.%04d, \"water_units\" : %d.%04d,  \"elec_usage\": %d.%04d, \"water_usage\" : %d.%04d}", roomID.toInt(), (int)elec_Total, (int)(elec_Total * 10000) % 10000, (int)water_Total, (int)(water_Total * 10000) % 10000, (int)current_elec, (int)(current_elec * 10000) % 10000, (int)current_water, (int)(current_elec * 10000));
       Serial.print("Data was put to database : ");
       Serial.println(outPayload);
-      client.publish(outTopic, outPayload);
+      client.publish("myTopic", outPayload);
     }
     delayTime = 0;
   }
