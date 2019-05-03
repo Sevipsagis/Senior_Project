@@ -88,6 +88,7 @@ void reconnect() {
       Serial.println("Successfully connected with MQTT");
       Serial.print("Client: ");
       Serial.println(clientID);
+      client.subscribe("myTopic");
     }
     else {
       Serial.print("failed, rc=");
@@ -95,6 +96,29 @@ void reconnect() {
       Serial.println(" try again in 5 seconds"); // Wait 5 seconds before retrying delay(1000);
     }
   }
+}
+
+void callback(char* topic, byte* payload, unsigned int length) {
+  String text = "";
+  Serial.print("Message arrived [");
+  Serial.print(topic);
+  Serial.print("] ");
+  for (int i = 0; i < length; i++) {
+    text += (char)payload[i];
+  }
+
+  if (text == "ON") {
+    Serial.println("ON");
+    digitalWrite (relayPort, HIGH);
+    digitalWrite(BUILTIN_LED, LOW);   // Turn the LED on (Note that LOW is the voltage level
+    // but actually the LED is on; this is because
+    // it is active low on the ESP-01)
+  } else if (text == "OFF") {
+    Serial.println("OFF");
+    digitalWrite (relayPort, LOW);
+    digitalWrite(BUILTIN_LED, HIGH);  // Turn the LED off by making the voltage HIGH
+  }
+
 }
 
 void rpm () {
