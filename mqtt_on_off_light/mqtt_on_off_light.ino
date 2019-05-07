@@ -85,6 +85,8 @@ void callback(char* topic, byte* payload, unsigned int length) {
     Serial.println("OFF");
     digitalWrite (relay, LOW);
     digitalWrite(BUILTIN_LED, HIGH);  // Turn the LED off by making the voltage HIGH
+  } else {
+    Serial.println(text);
   }
 
 }
