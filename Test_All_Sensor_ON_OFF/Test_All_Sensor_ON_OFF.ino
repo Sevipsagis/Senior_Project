@@ -25,7 +25,7 @@ WiFiClient espClient;
 PubSubClient client(espClient);
 char usedTopic[] = "myTopic";
 // PZEM004T Sensor
-PZEM004T pzem(12, 13); // (RX,TX) connect to D6,D7 of PZEM
+PZEM004T pzem(3, 1); // (RX,TX) connect to D6,D7 of PZEM
 IPAddress ip(192, 168, 1, 1);
 float current_elec;
 float elec_Total;
@@ -179,6 +179,7 @@ void waterCount() {
 }
 
 void elecCount() {
+  Serial.println(pzem.current(ip));
   current_elec = pzem.current(ip) / 3600;
   elec_Total += current_elec;
   elec_Units += elec_Total / 1000; // Convert W/sec to W/h
@@ -465,7 +466,7 @@ void loop() {
       Serial.print("This Room Water Units : ");
       Serial.println(backupData.b_water);
       char outPayload[1000] = "";
-      sprintf(outPayload, "{\"room\": \"%i\", \"elec_units\": %d.%04d, \"water_units\" : %d.%04d,  \"elec_usage\": %d.%04d, \"water_usage\" : %d.%04d}", roomID.toInt(), (int)elec_Total, (int)(elec_Total * 10000) % 10000, (int)water_Total, (int)(water_Total * 10000) % 10000, (int)current_elec, (int)(current_elec * 10000) % 10000, (int)current_water, (int)(current_elec * 10000));
+      sprintf(outPayload, "{\"room\": \"%i\", \"elec_units\": %d.%04d, \"water_units\" : %d.%04d,  \"elec_usage\": %d.%04d, \"water_usage\" : %d.%04d}", roomID.toInt(), (int)elec_Total, (int)(elec_Total * 10000) % 10000, (int)water_Total, (int)(water_Total * 10000) % 10000, (int)current_elec, (int)(current_elec * 10000) % 10000, (int)current_water, (int)(current_water * 10000));
       Serial.print("Data was put to database : ");
       Serial.println(outPayload);
       client.publish("myTopic", outPayload);
