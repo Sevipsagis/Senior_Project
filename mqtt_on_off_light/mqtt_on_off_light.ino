@@ -25,10 +25,11 @@
 
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
+#include <PZEM004T.h>
 
 // Update these with values suitable for your network.
 
-int relay = 5;
+int relay = 5; // Connect to D1
 
 const char* ssid = "KornDva";
 const char* password = "Kornasak39";
@@ -39,6 +40,13 @@ PubSubClient client(espClient);
 long lastMsg = 0;
 char msg[50];
 int value = 0;
+
+// PZEM004T Sensor
+PZEM004T pzem(D6, D7); // (TX,RX) connect to D6,D7 of PZEM
+IPAddress ip(192, 168, 1, 1);
+float current_elec;
+float elec_Total;
+float elec_Units;
 
 void setup_wifi() {
 
@@ -124,11 +132,24 @@ void setup() {
   client.setCallback(callback);
 }
 
+void elecCount() {
+  Serial.println(pzem.voltage(ip));
+  current_elec = pzem.voltage(ip) / 3600;
+  elec_Total += current_elec;
+  elec_Units += elec_Total / 1000; // Convert W/sec to W/h
+}
+
 void loop() {
 
   if (!client.connected()) {
     reconnect();
   }
+  elecCount();
+  Serial.print ("Calc Elect Units : ");
+  Serial.println (current_elec, 4);
+  Serial.print ("Total Elect Units : ");
+  Serial.println (elec_Units, 4);
+  Serial.println("==================================");
   client.loop();
 
 //  long now = millis();

@@ -17,8 +17,8 @@
 //  LCD
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 //  Wi-Fi
-const char *ssid = "KornDva";
-const char *password = "Kornasak39";
+const char *ssid = "test";
+const char *password = "12345678";
 //  MQTT
 const char *mqtt_server = "broker.mqttdashboard.com";
 WiFiClient espClient;
@@ -130,7 +130,7 @@ void rpm () {
 //----------------------------------------------------
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(115200);
+  Serial.begin(9600);
   //Flow Sensor
   pinMode(hallsensor, INPUT); //initializes digital pin 2 as an input
   attachInterrupt(14, rpm, RISING); //and the interrupt is attached
