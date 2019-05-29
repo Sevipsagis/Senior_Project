@@ -14,28 +14,28 @@ mongoose.Promise = global.Promise;
 
 var mqtt = require('mqtt')
 var messageModel = require('./models/messageModel');
-var client  = mqtt.connect('mqtt://broker.mqttdashboard.com')
+var client = mqtt.connect('mqtt://broker.mqttdashboard.com')
 
 var app = express();
 
 
 client.on('connect', function () {
-    client.subscribe('myTopic')
+  client.subscribe('myTopic')
 })
 client.on('message', function (topic, message) {
-object = JSON.parse(message);
-// roomNumber = object.room;
-// context = object.message;
-// console.log(context);
-// var document = new messageModel(object);
-// document.save((err, data) => {
-//   if(err){console.log(err)}
-//   else{console.log("save complete");console.log(data)}
-// });
-messageModel.findOneAndUpdate({"room" : object.room}, object, (err, data) => {
-  if(err) console.log(err);
-  console.log("Update : ", data);
-});
+  object = JSON.parse(message);
+  // roomNumber = object.room;
+  // context = object.message;
+  // console.log(context);
+  // var document = new messageModel(object);
+  // document.save((err, data) => {
+  //   if(err){console.log(err)}
+  //   else{console.log("save complete");console.log(data)}
+  // });
+  messageModel.findOneAndUpdate({ "room": object.room }, object, (err, data) => {
+    if (err) console.log(err);
+    console.log("Update : ", data);
+  });
 })
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -49,14 +49,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.get('/test', (req, res) => {
+  client.publish("sevi/test", "send from backend");
+  res.send({})
+})
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
