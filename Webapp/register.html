@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+	<!-- Custom styles for this template -->
+	<link href="product.css" rel="stylesheet">
+
+</head>
+<body class="bg-light scroll">
+	<nav class="site-header sticky-top navbar navbar-expand-lg navbar-white bg-white">
+		<div class="collapse navbar-collapse">
+			<span class="navbar-brand d-flex" href="#">
+				<img src="hexagon.svg" class="ml-5 mx-auto align-self-center" width="36" height="36"/>
+				<h5 class="ml-3 mb-0 align-self-center">Project 101</h5>
+			</span>
+			<ul class="navbar-nav mx-auto mt-2 mt-lg-0">
+				<li class="nav-item mr-5">
+					<a class="nav-link" href="home.html">
+						<img src="home.svg" class="mx-auto d-block" width="24" height="24"/>
+						Home
+					</a>
+				</li>
+				<li class="nav-item mr-5">
+					<a class="nav-link" href="profile.html">
+						<img src="user.svg" class="mx-auto d-block" width="24" height="24"/>
+						Profile
+					</a>
+				</li>
+				<li class="nav-item nav-active mr-5">
+					<a class="nav-link" href="register.html">
+						<img src="edit.svg" class="mx-auto d-block" width="24" height="24"/>
+						Register
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">
+						<img src="settings.svg" class="mx-auto d-block" width="24" height="24"/>
+						Setting
+					</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<div class="position-relative overflow-hidden 3 bg-light row pb-5 d-flex">
+		<div class="offset-1 col-8">
+			<h1 class="m-5">Register</h1>
+		</div>
+		<div class="col-3 align-self-center">
+			<p>Select room</p>
+			<div class="btn-group" role="group">
+				<button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Dropdown
+				</button>
+				<div class="dropdown-menu custom-dropdown" aria-labelledby="btnGroupDrop1">
+					<a class="dropdown-item" href="#">Room 101</a>
+					<a class="dropdown-item" href="#">Room 102</a>
+					<a class="dropdown-item" href="#">Room 103</a>
+					<a class="dropdown-item" href="#">Room 104</a>
+					<a class="dropdown-item" href="#">Room 105</a>
+					<a class="dropdown-item" href="#">Room 106</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="offset-1 col-10 bg-white mb-5">
+		<h5 class="p-5">Personal Information</h5>
+		<div class="row">
+			<div class="col-12">
+				<form class="was-validated">
+					<div class="col-12">
+						<div class="form-row">
+							<div class="form-group col-6">
+								<label for="name" class="col-4 col-form-label">FIRSTNAME*</label> 
+								<div class="col-12">
+									<input id="name" name="name" placeholder="" class="form-control here" required="required" type="text" pattern="[A-Za-z0-9]+" minlength="1">
+									<div class="invalid-feedback">Please enter a first name.</div>
+								</div>
+							</div>
+							<div class="form-group col-6">
+								<label for="lastname" class="col-4 col-form-label">LASTNAME*</label>
+								<div class="col-12">
+									<input id="lastname" name="lastname" placeholder="" class="form-control here" required="required" type="text" pattern="[A-Za-z0-9]+" minlength="1">
+									<div class="invalid-feedback">Please enter a last name.</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-12">
+						<div class="form-row">
+							<div class="form-group col-6">
+								<label for="email" class="col-4 col-form-label">E-MAIL*</label> 
+								<div class="col-12">
+									<input id="email" name="email" class="form-control here" type="email" placeholder="exemple@exemple.com" autocomplete="off" pattern="^[\w]{1,}[\w.+-]{0,}@[\w-]{2,}([.][a-zA-Z]{2,}|[.][\w-]{2,}[.][a-zA-Z]{2,})$" required/>
+									<div class="invalid-feedback">Please enter a email.</div>
+								</div>
+							</div>
+							<div class="form-group col-6">
+								<label for="phone" class="col-4 col-form-label">TELEPHONE*</label>
+								<div class="col-12">
+									<input id="phone" name="phone" class="form-control here" type="tel" placeholder="000-000-0000" autocomplete="off" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"  minlength="12" maxlength="12" required/>
+									<div class="invalid-feedback">Please choose a phone number.</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-12">
+						<div class="form-row">
+							<div class="form-group col-6">
+								<label for="nationality" class="col-4 col-form-label">NATIONALITY*</label>
+								<div class="col-12">
+									<input id="nationality" name="nationality" class="form-control here" type="text" placeholder="" autocomplete="off" pattern="[A-Za-z0-9]+" size="12" minlength="1" required/>
+									<div class="invalid-feedback">Please choose a nationality.</div>
+								</div>
+							</div>
+							<div class="form-group col-6">
+								<label for="personalid" class="col-6 col-form-label">PERSONAL ID / PASSPORT ID*</label>
+								<div class="col-12">
+									<input id="personalid" name="personalid" class="form-control here" type="text" placeholder="000-000-0000" autocomplete="off" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" size="12" minlength="12" maxlength="12" required/>
+									<div class="invalid-feedback">Please choose a personal id or passport id.</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-12">
+						<div class="form-group">
+							<label for="address" class="col-4 col-form-label">ADDRESS*</label>
+							<div class="col-12">
+								<textarea id="address" name="address" placeholder="" cols="40" rows="4" class="form-control" minlength="1" required></textarea>
+								<div class="invalid-feedback">Please choose a address.</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-12">
+						<div class="form-row">
+							<div class="col-4">
+								<div class="form-group">
+									<label for="picture" class="col-4 col-form-label">Upload Picture</label>
+									<div class="input-group col-12">
+										<div class="input-group-prepend">
+											<span class="input-group-text" id="inputGroupPrepend3">
+												<img src="upload.svg" class="ml-5 mx-auto align-self-center" width="24" height="24"/>
+											</span>
+										</div>
+										<div class="custom-file">
+											<input type="file" class="custom-file-input" id="inputFile" onchange="myFunction()" required>
+											<label class="custom-file-label" id="user-pic" for="inputFile">Choose file</label>
+											<div class="invalid-feedback">Please choose a address.</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="offset-4 col-1 mr-5">
+								<div class="form-group">
+									<label for="picture" class="col-12 col-form-label blank-text"> </label>
+									<div class="mx-auto text-center">
+										<button name="submit" type="submit" class="btn btn-primary btn-lg">Register</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-1">
+								<div class="form-group">
+									<label for="picture" class="col-12 col-form-label blank-text"> </label>
+									<div class="mx-auto text-center">
+										<button name="submit" type="submit" class="btn btn-secondary btn-lg">Cancel</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+<!-- jQuery library -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+<!-- Popper -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+<!-- Latest compiled and minified Bootstrap JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<!-- Initialize Bootstrap functionality -->
+<script>
+// Initialize tooltip component
+$(function () {
+	$('[data-toggle="tooltip"]').tooltip()
+})
+
+// Initialize popover component
+$(function () {
+	$('[data-toggle="popover"]').popover()
+})
+</script>
+
+<script>
+	function myFunction() {
+		var x = document.getElementById("inputFile");
+		txt = "";
+		file = x.files[0];
+		if ('files' in x) {
+			if ('name' in file) {
+				txt += file.name;
+			}
+		}
+		document.getElementById("user-pic").innerHTML = txt;
+	}
+</script>
+</html>

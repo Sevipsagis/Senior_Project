@@ -1,0 +1,15 @@
+export const DORM_FETCH = "dorm_fetch";
+export const DORM_EDIT = "dorm_edit";
+export const ROOM_FETCH = "room_fetch";
+export const SELECT_ROOM_FETCH = "select_room_fetch";
+export const ACTIVE_ROOM_FETCH = "active_room_fetch";
+export const INACTIVE_ROOM_FETCH = "inactive_room_fetch";
+export const BILL_ROOM = "bill_room";
+export const DELETE_ROOM = "delete_room";
+export const ROOM_REGISTER = "room_register";
+export const ROOM_EDIT = "room_edit";
+export const ROOM_ON = "room_on";
+export const ROOM_OFF = "room_off";
+export const FLOOR_FETCH = "floor_fetch";
+export const GET_LOGS = "get_logs";
+export const BILL_ALL = "bill_all";

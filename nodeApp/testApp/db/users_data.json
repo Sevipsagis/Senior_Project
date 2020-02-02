@@ -1,0 +1,10 @@
+{"_id":{"$oid":"5bd957b00c024107dc421be3"},"room":"102","elec_usage":0,"water_usage":0,"created_date":{"$date":"2018-10-31T07:20:16.689Z"}}
+{"_id":{"$oid":"5be14efa37802accc37cd60b"},"room":"101","elec_usage":0,"water_usage":0,"created_date":{"$date":"2018-10-31T07:20:16.689Z"}}
+{"_id":{"$oid":"5be1519237802accc37cd793"},"room":"103","elec_usage":0,"water_usage":0,"created_date":{"$date":"2018-10-31T07:20:16.689Z"}}
+{"_id":{"$oid":"5be151ac37802accc37cd79d"},"room":"104","elec_usage":0,"water_usage":0,"created_date":{"$date":"2018-10-31T07:20:16.689Z"}}
+{"_id":{"$oid":"5be151b637802accc37cd7a5"},"room":"105","elec_usage":0,"water_usage":0,"created_date":{"$date":"2018-10-31T07:20:16.689Z"}}
+{"_id":{"$oid":"5be151dc37802accc37cd7bf"},"room":"106","elec_usage":0,"water_usage":0,"created_date":{"$date":"2018-10-31T07:20:16.689Z"}}
+{"_id":{"$oid":"5be151f037802accc37cd7cb"},"room":"107","elec_usage":0,"water_usage":0,"created_date":{"$date":"2018-10-31T07:20:16.689Z"}}
+{"_id":{"$oid":"5be1525a37802accc37cd806"},"room":"108","elec_usage":0,"water_usage":0,"created_date":{"$date":"2018-10-31T07:20:16.689Z"}}
+{"_id":{"$oid":"5be1526b37802accc37cd80f"},"room":"109","elec_usage":0,"water_usage":0,"created_date":{"$date":"2018-10-31T07:20:16.689Z"}}
+{"_id":{"$oid":"5be1527837802accc37cd81a"},"room":"110","elec_usage":0,"water_usage":0,"created_date":{"$date":"2018-10-31T07:20:16.689Z"}}
